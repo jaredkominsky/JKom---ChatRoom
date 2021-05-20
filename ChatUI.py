@@ -1,13 +1,13 @@
 from threading import Thread
 from tkinter import *
-from tkinter import filedialog
 
-import ClientMethods
+from ClientMethods import ClientMethod
 
 
 class ChatUI:
 
-    def __init__(self, name, client_names):
+    def __init__(self, client_socket, name, client_names):
+        handler = ClientMethod(self, client_socket, client_names, name)
         self.root = Tk()
         self.root.title("Chat Client")
 
@@ -28,11 +28,11 @@ class ChatUI:
 
         self.input_field = Entry(self.root,
                                  textvariable=self.msg)
-        self.input_field.bind(ClientMethods.send_message())
+        self.input_field.bind(handler.send_message())
         self.input_field.pack()
         self.send_button = Button(self.root,
                                   text="Send",
-                                  command=ClientMethods.send_message())
+                                  command=handler.send_message())
         self.send_button.pack()
 
         self.listbox = Listbox(self.root, exportselection=False)
@@ -44,9 +44,9 @@ class ChatUI:
 
         self.file_search_button = Button(self.root,
                                          text='Select a File',
-                                         command=ClientMethods.browse_files())
+                                         command=handler.browse_files())
         self.file_search_button.pack()
 
-        Thread(target=ClientMethods.receive_msg(name, client_names)).start()
+        Thread(target=handler.receive_msg(name, client_names)).start()
 
         mainloop()
