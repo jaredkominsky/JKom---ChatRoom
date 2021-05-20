@@ -26,15 +26,6 @@ class ChatUI:
         self.display_message.pack()
         self.display_window.pack()
 
-        self.input_field = Entry(self.root,
-                                 textvariable=self.msg)
-        self.input_field.bind(handler.send_message())
-        self.input_field.pack()
-        self.send_button = Button(self.root,
-                                  text="Send",
-                                  command=handler.send_message())
-        self.send_button.pack()
-
         self.listbox = Listbox(self.root, exportselection=False)
         self.listbox.pack(side=LEFT)
         self.listbox.insert(END,
@@ -42,11 +33,21 @@ class ChatUI:
         self.listbox.select_set(0)
         self.listbox.event_generate('<<ListboxSelect>>')
 
+        self.input_field = Entry(self.root,
+                                 textvariable=self.msg)
+
+        self.input_field.bind(handler.send_message())
+        self.input_field.pack()
+        self.send_button = Button(self.root,
+                                  text="Send",
+                                  command=handler.send_message())
+        self.send_button.pack()
+
         self.file_search_button = Button(self.root,
                                          text='Select a File',
                                          command=handler.browse_files())
         self.file_search_button.pack()
 
-        Thread(target=handler.receive_msg(name, client_names)).start()
+        Thread(target=handler.receive_msg()).start()
 
         mainloop()

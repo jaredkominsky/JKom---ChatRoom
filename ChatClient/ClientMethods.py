@@ -12,12 +12,12 @@ class ClientMethod:
         self.client_names = client_names
         self.name = name
 
-    def receive_msg(self, client_socket, name):
-        client_socket.send(f'{"0"}{SEPARATOR}{"everyone"}{SEPARATOR}{name}{SEPARATOR}{name}'.encode())
+    def receive_msg(self):
+        self.client_socket.send(f'{"0"}{SEPARATOR}{"everyone"}{SEPARATOR}{self.name}{SEPARATOR}{self.name}'.encode())
         while True:
             try:
                 #  Receive the message and decode.
-                msg_recv = client_socket.recv(BUFFERSIZE).decode(FORMAT)
+                msg_recv = self.client_socket.recv(BUFFERSIZE).decode(FORMAT)
                 split_message = msg_recv.split(SEPARATOR)
 
                 #  See if the message is from server or another user
@@ -79,7 +79,6 @@ class ClientMethod:
         if not filename:
             return
 
-        self.ui.file_search_button.configure(text="File Sent")
         self.send_file(filename)
 
     def send_file(self, filename):
