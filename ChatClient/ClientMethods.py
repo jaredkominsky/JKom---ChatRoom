@@ -1,4 +1,3 @@
-from threading import Thread
 from tkinter import filedialog, END
 
 FORMAT = 'utf-8'
@@ -117,5 +116,3 @@ class ClientMethod:
         f.write(message)
         self.ui.display_message.insert(END,
                                        'The file has been saved.')
-
-        Thread(target=self.receive_msg()).start()

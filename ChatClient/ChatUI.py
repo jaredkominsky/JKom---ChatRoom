@@ -1,3 +1,4 @@
+from threading import Thread
 from tkinter import *
 
 from ClientMethods import ClientMethod
@@ -46,5 +47,7 @@ class ChatUI:
                                          text='Select a File',
                                          command=handler.browse_files())
         self.file_search_button.pack()
+
+        Thread(target=handler.receive_msg()).start()
 
         mainloop()
