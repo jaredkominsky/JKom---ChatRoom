@@ -49,3 +49,5 @@ Possible: Addition to create private chat rooms when sending messages to individ
 If server disconnects, sends message to all clients and no longer accepts messages. 
 
 Error detections!!!
+
+Add database to store user conversations.
