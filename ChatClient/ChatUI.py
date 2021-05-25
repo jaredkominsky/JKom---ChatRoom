@@ -7,7 +7,6 @@ from ClientMethods import *
 class ChatUI:
 
     def __init__(self, client_socket, name, client_names):
-
         self.root = Tk()
         self.root.title("Chat Client")
 
@@ -36,29 +35,33 @@ class ChatUI:
         self.input_field = Entry(self.root,
                                  textvariable=self.msg)
 
-        self.input_field.bind(send_message(self.msg,
-                                           self.listbox,
-                                           self.display_message,
-                                           name,
-                                           client_socket))
+        self.input_field.bind(lambda: send_message(self.msg,
+                                                   self.listbox,
+                                                   self.display_message,
+                                                   name,
+                                                   client_socket))
         self.input_field.pack()
         self.send_button = Button(self.root,
                                   text="Send",
-                                  command=send_message(self.msg,
-                                                       self.listbox,
-                                                       self.display_message,
-                                                       name,
-                                                       client_socket))
+                                  command=lambda: send_message(self.msg,
+                                                               self.listbox,
+                                                               self.display_message,
+                                                               name,
+                                                               client_socket))
         self.send_button.pack()
 
         self.file_search_button = Button(self.root,
                                          text='Select a File',
-                                         command=browse_files(self.listbox,
-                                                              self.display_message,
-                                                              client_socket,
-                                                              name))
+                                         command=lambda: browse_files(self.listbox,
+                                                                      self.display_message,
+                                                                      client_socket,
+                                                                      name))
         self.file_search_button.pack()
 
-        Thread(target=receive_msg(client_socket, client_names, name, self.display_message, self.listbox)).start()
+        Thread(target=lambda: receive_msg(client_socket,
+                                          client_names,
+                                          name,
+                                          self.display_message,
+                                          self.listbox)).start()
 
         mainloop()
