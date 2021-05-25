@@ -1,3 +1,9 @@
+""" Main file for Server
+
+ChatServer.py creates the socket to open the server. The server
+is then connected to the port through ServerMethods.py.
+"""
+
 import socket
 
 from ServerMethods import start_server
