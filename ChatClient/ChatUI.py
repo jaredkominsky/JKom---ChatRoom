@@ -1,13 +1,13 @@
 from threading import Thread
 from tkinter import *
 
-from ClientMethods import ClientMethod
+from ClientMethods import *
 
 
 class ChatUI:
 
     def __init__(self, client_socket, name, client_names):
-        handler = ClientMethod(self, client_socket, client_names, name)
+
         self.root = Tk()
         self.root.title("Chat Client")
 
@@ -36,18 +36,29 @@ class ChatUI:
         self.input_field = Entry(self.root,
                                  textvariable=self.msg)
 
-        self.input_field.bind(handler.send_message())
+        self.input_field.bind(send_message(self.msg,
+                                           self.listbox,
+                                           self.display_message,
+                                           name,
+                                           client_socket))
         self.input_field.pack()
         self.send_button = Button(self.root,
                                   text="Send",
-                                  command=handler.send_message())
+                                  command=send_message(self.msg,
+                                                       self.listbox,
+                                                       self.display_message,
+                                                       name,
+                                                       client_socket))
         self.send_button.pack()
 
         self.file_search_button = Button(self.root,
                                          text='Select a File',
-                                         command=handler.browse_files())
+                                         command=browse_files(self.listbox,
+                                                              self.display_message,
+                                                              client_socket,
+                                                              name))
         self.file_search_button.pack()
 
-        Thread(target=handler.receive_msg()).start()
+        Thread(target=receive_msg(client_socket, client_names, name, self.display_message, self.listbox)).start()
 
         mainloop()
