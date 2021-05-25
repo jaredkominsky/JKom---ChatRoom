@@ -42,3 +42,5 @@ Increase file transfer size using multiple packets sent through the sockets.
 Have more fluid design of listing current users.
 Track when users have left the chat and update list. 
 Possible: Addition to create private chat rooms when sending messages to individuals. 
+If server disconnects, sends message to all clients and no longer accepts messages. 
+Error detections!!!
