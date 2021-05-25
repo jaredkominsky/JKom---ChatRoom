@@ -4,3 +4,4 @@ ChatClient/__pycache__/ClientHandling.cpython-37.pyc
 *.pyc
 *.pyc
 .idea/misc.xml
+*.iml
