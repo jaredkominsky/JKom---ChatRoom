@@ -22,7 +22,7 @@ def receive_msg(client_socket, client_names, name, display, listbox):
     :param display: UI display that will display the messages.
     :param name: Name of the user.
     :param client_names: Names of all users in the chatroom.
-        """
+    """
     client_socket.send(f'{"0"}{SEPARATOR}{"everyone"}{SEPARATOR}{name}{SEPARATOR}{name}'.encode())
     while True:
         try:
@@ -48,7 +48,8 @@ def accept_msg_from_client(text_message, client_names, display, listbox):
     :param listbox:
     :param display:
     :param client_names:
-    :param text_message"""
+    :param text_message
+    """
     print(text_message)
     #  All incoming message format {text_file bit}:{to}:{from}:{message}
     from_client = text_message[2]
@@ -59,6 +60,15 @@ def accept_msg_from_client(text_message, client_names, display, listbox):
 
 
 def handle_client_names(client_name, client_names, listbox):
+    """Method to update listbox with users who are currently in chat.
+
+    This method takes the name of the user who sent the most recent message.
+    If the user is not already listed, user is added to the listbox.
+
+    :param client_name: The user's name who sent the message
+    :param client_names: Array that stores the users' names
+    :param listbox: UI listbox that displays the user names
+    """
     if client_name not in client_names:
         client_names.append(client_name)
     listbox.delete(0, END)
@@ -69,6 +79,18 @@ def handle_client_names(client_name, client_names, listbox):
 
 
 def send_message(msg, listbox, display, name, client_socket):
+    """Sends message to the server.
+
+    Analyses if message is sent as private or group.
+    If private, shows message as ->PM-> to portray Private Message.
+    Else, prints the message normally in the display box.
+
+    :param msg: the UI msg input box
+    :param listbox: UI listbox that displays users' names
+    :param display: UI display box that displays messages
+    :param name:L user's name
+    :param client_socket: user's individual socket
+    """
     message = msg.get()
     msg.set('')
     recipient = listbox.curselection()
@@ -88,6 +110,13 @@ def send_message(msg, listbox, display, name, client_socket):
 
 
 def browse_files(listbox, display, client_socket, name):
+    """Opens the file explorer for user to select what file to send.
+
+    :param listbox: UI listbox that displays users' names
+    :param display: UI display box that displays messages
+    :param client_socket: user's individual socket
+    :param name: user's names
+    """
     filename = filedialog.askopenfilename(
         initialdir="/Users/jkom8/Desktop/final - chatting additions - kominsky",
         title="Select a File",
@@ -107,6 +136,14 @@ def browse_files(listbox, display, client_socket, name):
 
 
 def send_file(filename, listbox, display, client_socket, name):
+    """Sends the file to the server.
+
+    :param filename: filedialogue file name
+    :param listbox: UI listbox that displays users' names
+    :param display: UI display box that displays messages
+    :param client_socket: user's individual socket
+    :param name: user's names
+    """
     f = open(filename,
              'r')
     data = f.read(BUFFERSIZE)
@@ -124,6 +161,13 @@ def send_file(filename, listbox, display, client_socket, name):
 
 
 def read_write_file(message, display):
+    """This method takes data sent from the server and writes it to a new file.
+
+    First, this method asks the user where they would like to save the incoming
+    file. The file is then written and saved to the location.
+
+    :param message: data of file
+    :param display: UI display box that displays the message."""
     message = message[3]
 
     save_file = filedialog.asksaveasfilename(

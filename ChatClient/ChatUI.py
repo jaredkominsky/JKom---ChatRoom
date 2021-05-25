@@ -9,23 +9,18 @@ class ChatUI:
 
     Class inherits methods from ClientMethods.py. The UI is created,
     bound to ClientMethod.py methods.
-
-    ...
-
-    Attributes
-    ----------
-    client_socket : socket
-        the individual's socket that is utilizing this UI
-    name : str
-        the name of the user
-    client_names : str array
-        array that holds the name of all users in the chat
     """
 
     def __init__(self, client_socket, name, client_names):
         """Constructor for ChatUI.
 
-        Sets up and runs the UI."""
+        Sets up and runs the UI.
+
+        :param self: self object
+        :param client_socket: user's individual sockets
+        :param name: user's name
+        :param client_names: list of all users in the chat
+        """
 
         self.root = Tk()
         self.root.title("Chat Client")
