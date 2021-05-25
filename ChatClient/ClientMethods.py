@@ -1,3 +1,10 @@
+"""ClientMethods.py holds the methods the client requires.
+
+UI imports methods from ClientMethods. Buttons on the UI
+utilize these methods in order to facilitate message and
+file transfers.
+"""
+
 from tkinter import filedialog, END
 
 FORMAT = 'utf-8'
@@ -6,6 +13,16 @@ BUFFERSIZE = 2048
 
 
 def receive_msg(client_socket, client_names, name, display, listbox):
+    """Target of UI thread that continuously waits for incoming messages.
+
+    Parameters
+    ----------
+    :param client_socket: Socket that holds client connection information.
+    :param listbox: UI listbox that holds current chatroom user's information.
+    :param display: UI display that will display the messages.
+    :param name: Name of the user.
+    :param client_names: Names of all users in the chatroom.
+        """
     client_socket.send(f'{"0"}{SEPARATOR}{"everyone"}{SEPARATOR}{name}{SEPARATOR}{name}'.encode())
     while True:
         try:
@@ -26,6 +43,12 @@ def receive_msg(client_socket, client_names, name, display, listbox):
 
 
 def accept_msg_from_client(text_message, client_names, display, listbox):
+    """Receives and displays the messages from other users.
+
+    :param listbox:
+    :param display:
+    :param client_names:
+    :param text_message"""
     print(text_message)
     #  All incoming message format {text_file bit}:{to}:{from}:{message}
     from_client = text_message[2]

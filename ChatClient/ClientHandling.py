@@ -1,3 +1,11 @@
+"""ClientHandling.py starts each client.
+
+This controls the start of the client program.
+Each client runs this script which requests the login name
+of the user. Once the user has put in their name, the
+client sends the name to the server and starts the UI.
+"""
+
 import socket
 from ChatUI import ChatUI
 
@@ -13,6 +21,5 @@ print('Connected to remote host. You can start sending messages.')
 name = input('Name: ')
 
 client_names = ['everyone']
-text_file = 0  # Creating a bit to tell if incoming data is file or chat message
 
 UI = ChatUI(client_socket, name, client_names)
