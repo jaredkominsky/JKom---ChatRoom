@@ -1,3 +1,5 @@
+"""Method file that holds all methods for the server."""
+
 from threading import *
 
 FORMAT = "utf-8"
@@ -5,13 +7,30 @@ BUFFERSIZE = 2048
 SEPARATOR = '<SEPARATOR>'
 
 
-def broadcast_message(message, conn, clients):
+def broadcast_data(message, conn, clients):
+    """Takes received data and sends them to all clients listed
+    in clients.
+
+    :param message: Data that was received and to be sent.
+    :param conn: Server socket
+    :param clients: List of client sockets.
+    """
     for client in clients:
         if client != conn:
             client.send(message.encode(FORMAT))
 
 
 def handle_client(conn, names, clients):
+    """Infinite while that continuously waits for incoming data and clients.
+
+    Target of server thread. This loop infinitely waits for new messages
+    to be received. The method then analyses if the message is meant as a
+    private message or group and send the data out accordingly.
+
+    :param conn: Server socket
+    :param names: list of names that are related to the clients
+    :param clients:  list of client sockets
+    """
     conn_open = True
 
     while conn_open:
@@ -31,7 +50,7 @@ def handle_client(conn, names, clients):
             message_to_send = f'{text_file}{SEPARATOR}{to_client}{SEPARATOR}{from_client}{SEPARATOR}[{message}]'
             individual_client_conn.send(message_to_send.encode(FORMAT))
         else:
-            broadcast_message(msg_recv, conn, clients)
+            broadcast_data(msg_recv, conn, clients)
 
     conn.close()
 
@@ -40,6 +59,18 @@ def handle_client(conn, names, clients):
 
 
 def start_server(server_address, server, names, clients):
+    """Starts the server connection and waits for new incoming clients.
+
+    This method connects the socket to the server and starts an infinite
+    loop that awaits incoming connection. Once a new connection is established,
+    The server stores the socket and client name in their respective lists.
+    A new thread is created for each client waiting for their incoming data.
+
+    :param server_address: IP and port of server connection
+    :param server: the server socket
+    :param names: list of names relating to each socket
+    :param clients: list of client sockets
+    """
     print('Chat session successfully connected on: ' + server_address[0])
 
     server.listen()
@@ -53,7 +84,7 @@ def start_server(server_address, server, names, clients):
         print('New connection with {}'.format(name))
         clients.append(connection)
 
-        broadcast_message(('{} has joined the chat.\r\n'.format(name)), connection, clients)
+        broadcast_data(('{} has joined the chat.\r\n'.format(name)), connection, clients)
 
         connection.send('Welcome to the chat!\r\n'.encode(FORMAT))
         connection.send('Remember to select who you want the message to be sent to! '.encode(FORMAT))
