@@ -5,14 +5,28 @@ from ClientMethods import *
 
 
 class ChatUI:
+    """Class that creates and starts the UI
+
+    Class inherits methods from ClientMethods.py. The UI is created,
+    bound to ClientMethod.py methods.
+    """
 
     def __init__(self, client_socket, name, client_names):
+        """Constructor for ChatUI.
+
+        Sets up and runs the UI.
+
+        :param self: self object
+        :param client_socket: user's individual sockets
+        :param name: user's name
+        :param client_names: list of all users in the chat
+        """
+
         self.root = Tk()
         self.root.title("Chat Client")
 
         self.display_window = Frame(self.root)
-        self.msg = StringVar()
-        self.msg.set("Type your messages here.")
+
         self.scrollbar = Scrollbar(self.display_window)
         self.display_message = Listbox(self.display_window,
                                        height=15,
@@ -25,6 +39,9 @@ class ChatUI:
         self.display_message.pack()
         self.display_window.pack()
 
+        self.msg = StringVar()
+        self.msg.set("Type your messages here.")
+
         self.listbox = Listbox(self.root, exportselection=False)
         self.listbox.pack(side=LEFT)
         self.listbox.insert(END,
@@ -34,13 +51,13 @@ class ChatUI:
 
         self.input_field = Entry(self.root,
                                  textvariable=self.msg)
-
         self.input_field.bind(lambda: send_message(self.msg,
                                                    self.listbox,
                                                    self.display_message,
                                                    name,
                                                    client_socket))
         self.input_field.pack()
+
         self.send_button = Button(self.root,
                                   text="Send",
                                   command=lambda: send_message(self.msg,
