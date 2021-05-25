@@ -1,3 +1,9 @@
+"""This class creates the UI for each individual client.
+
+The UI is designed and created once the class is instantiated. Each instance then connected the buttons
+with methods in ClientMethods.py to run the functionalities that are required.
+"""
+
 from threading import Thread
 from tkinter import *
 
