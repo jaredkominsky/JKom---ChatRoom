@@ -118,7 +118,7 @@ def browse_files(listbox, display, client_socket, name):
     :param name: user's names
     """
     filename = filedialog.askopenfilename(
-        initialdir="/Users/jkom8/Desktop/final - chatting additions - kominsky",
+        initialdir="/Users",
         title="Select a File",
         filetypes=(("Text files",
                     "*.txt*"),
@@ -167,11 +167,12 @@ def read_write_file(message, display):
     file. The file is then written and saved to the location.
 
     :param message: data of file
-    :param display: UI display box that displays the message."""
+    :param display: UI display box that displays the message.
+    """
     message = message[3]
 
     save_file = filedialog.asksaveasfilename(
-        initialdir="/Users/jkom8/Desktop/final - chatting additions - kominsky",
+        initialdir="/Users",
         title="Where would you like to save the file",
         filetypes=(("Text files",
                     "*.txt*"),
