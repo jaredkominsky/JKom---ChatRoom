@@ -37,7 +37,7 @@ def receive_msg(client_socket, client_names, name, display, listbox):
                 elif split_message[0] == '1':  # If file bit, ask user to save as and write to file.
                     read_write_file(split_message, display)
             else:
-                display.insert(END, msg_recv)
+                display.insert(END, msg_recv + "\n")
         except OSError:
             break
 
@@ -156,7 +156,7 @@ def send_file(filename, listbox, display, client_socket, name):
             client_socket.send(message.encode(FORMAT))
             data = f.read(BUFFERSIZE)
     display.insert(END,
-                   'File sending completed.')
+                   'File sending completed.\n')
 
 
 def read_write_file(message, display):
@@ -183,4 +183,4 @@ def read_write_file(message, display):
              'w')
     f.write(message)
     display.insert(END,
-                   'The file has been saved.')
+                   'The file has been saved.\n')
