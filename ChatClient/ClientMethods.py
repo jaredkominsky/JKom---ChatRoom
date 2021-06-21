@@ -85,7 +85,7 @@ def send_message(msg, listbox, display, name, client_socket):
     If private, shows message as ->PM-> to portray Private Message.
     Else, prints the message normally in the display box.
 
-    :param message: message that is inputted into entry box
+    :param msg: UI message variable
     :param listbox: UI listbox that displays users' names
     :param display: UI display box that displays messages
     :param name: user's name

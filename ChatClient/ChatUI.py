@@ -114,18 +114,9 @@ class ChatUI:
         self.root.geometry("147x34")
         self.root.resizable(width=True, height=True)
 
-        self.scrollbar = tk.Scrollbar(self.root)
-        # self.display_message = tk.Listbox(self.root,
-        #                                   yscrollcommand=self.scrollbar.set)
-        # self.display_message["borderwidth"] = "1px"
-        # ft = tk_font.Font(family='Times', size=10)
-        # self.display_message["font"] = ft
-        # self.display_message["fg"] = "#333333"
-        # self.display_message["justify"] = "left"
-        # self.display_message.place(x=0, y=0, width=450, height=320)
-        # self.display_message["setgrid"] = "True"
+        self.msg_display_scrollbar = tk.Scrollbar(self.root)
         self.display_message = tk.Text(self.root,
-                                       yscrollcommand=self.scrollbar.set,
+                                       yscrollcommand=self.msg_display_scrollbar.set,
                                        wrap=tk.WORD)
         self.display_message["borderwidth"] = "1px"
         ft = tk_font.Font(family='Times', size=10)
@@ -135,7 +126,9 @@ class ChatUI:
         self.display_message.place(x=0, y=0, width=450, height=320)
         self.display_message["setgrid"] = "True"
 
-        self.participant_listbox = tk.Listbox(self.root)
+        self.participant_scrollbar = tk.Scrollbar(self.root)
+        self.participant_listbox = tk.Listbox(self.root,
+                                              yscrollcommand=self.participant_scrollbar)
         self.participant_listbox["borderwidth"] = "1px"
         ft = tk_font.Font(family='Times', size=10)
         self.participant_listbox["font"] = ft
@@ -150,8 +143,10 @@ class ChatUI:
         self.msg = tk.StringVar()
         self.msg.set("Type your messages here.")
 
+        self.entry_scroll = tk.Scrollbar(self.root)
         self.input_field = tk.Entry(self.root,
-                                    textvariable=self.msg)
+                                    textvariable=self.msg,
+                                    xscrollcommand=self.entry_scroll)
         self.input_field["borderwidth"] = "1px"
         ft = tk_font.Font(family='Times', size=10)
         self.input_field["font"] = ft
