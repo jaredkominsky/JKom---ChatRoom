@@ -56,7 +56,7 @@ def accept_msg_from_client(text_message, client_names, display, listbox):
     message = text_message[3]
     handle_client_names(from_client, client_names, listbox)
     display.insert(END,
-                   '{}: {}'.format(from_client, message))
+                   '{}: {}\n'.format(from_client, message))
 
 
 def handle_client_names(client_name, client_names, listbox):
@@ -78,7 +78,7 @@ def handle_client_names(client_name, client_names, listbox):
     listbox.event_generate('<<ListboxSelect>>')
 
 
-def send_message(message, listbox, display, name, client_socket):
+def send_message(msg, listbox, display, name, client_socket):
     """Sends message to the server.
 
     Analyses if message is sent as private or group.
@@ -91,18 +91,18 @@ def send_message(message, listbox, display, name, client_socket):
     :param name: user's name
     :param client_socket: user's individual socket
     """
-    # message = msg.get()
-    # msg.set('')
+    message = msg.get()
+    msg.set('')
     recipient = listbox.curselection()
     print(recipient)
     # if message != name:
     if recipient[0] != 0:
         display.insert(END,
-                       '{}->PM->{}: {}'.format(name, listbox.get(recipient[0]),
-                                               message))
+                       '{}->PM->{}: {}\n'.format(name, listbox.get(recipient[0]),
+                                                 message))
     else:
         display.insert(END,
-                       '{}: {}'.format(name, message))
+                       '{}: {}\n'.format(name, message))
     for i in recipient:
         #  All incoming message format {text_file bit}:{to}:{from}:{message}
         message = f'{"0"}{SEPARATOR}{listbox.get(i)}{SEPARATOR}{name}{SEPARATOR}{message}'

@@ -111,17 +111,27 @@ class ChatUI:
 
         self.root = tk.Tk()
         self.root.title("Chat Client")
-        self.root.geometry("88x20")
-        self.root.resizable(width=False, height=False)
+        self.root.geometry("147x34")
+        self.root.resizable(width=True, height=True)
 
         self.scrollbar = tk.Scrollbar(self.root)
-        self.display_message = tk.Listbox(self.root,
-                                          yscrollcommand=self.scrollbar.set)
+        # self.display_message = tk.Listbox(self.root,
+        #                                   yscrollcommand=self.scrollbar.set)
+        # self.display_message["borderwidth"] = "1px"
+        # ft = tk_font.Font(family='Times', size=10)
+        # self.display_message["font"] = ft
+        # self.display_message["fg"] = "#333333"
+        # self.display_message["justify"] = "left"
+        # self.display_message.place(x=0, y=0, width=450, height=320)
+        # self.display_message["setgrid"] = "True"
+        self.display_message = tk.Text(self.root,
+                                       yscrollcommand=self.scrollbar.set,
+                                       wrap=tk.WORD)
         self.display_message["borderwidth"] = "1px"
         ft = tk_font.Font(family='Times', size=10)
         self.display_message["font"] = ft
         self.display_message["fg"] = "#333333"
-        self.display_message["justify"] = "center"
+        # self.display_message["justify"] = "left"
         self.display_message.place(x=0, y=0, width=450, height=320)
         self.display_message["setgrid"] = "True"
 
@@ -130,7 +140,7 @@ class ChatUI:
         ft = tk_font.Font(family='Times', size=10)
         self.participant_listbox["font"] = ft
         self.participant_listbox["fg"] = "#333333"
-        self.participant_listbox["justify"] = "center"
+        self.participant_listbox["justify"] = "left"
         self.participant_listbox.place(x=450, y=0, width=150, height=350)
         self.participant_listbox.insert(END,
                                         'everyone')
@@ -157,7 +167,7 @@ class ChatUI:
         self.send_button["justify"] = "center"
         self.send_button["text"] = "Send"
         self.send_button.place(x=370, y=320, width=80, height=30)
-        self.send_button["command"] = lambda: send_message(self.msg.get(),
+        self.send_button["command"] = lambda: send_message(self.msg,
                                                            self.participant_listbox,
                                                            self.display_message,
                                                            name,
