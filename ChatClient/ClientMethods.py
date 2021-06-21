@@ -78,21 +78,21 @@ def handle_client_names(client_name, client_names, listbox):
     listbox.event_generate('<<ListboxSelect>>')
 
 
-def send_message(msg, listbox, display, name, client_socket):
+def send_message(message, listbox, display, name, client_socket):
     """Sends message to the server.
 
     Analyses if message is sent as private or group.
     If private, shows message as ->PM-> to portray Private Message.
     Else, prints the message normally in the display box.
 
-    :param msg: the UI msg input box
+    :param message: message that is inputted into entry box
     :param listbox: UI listbox that displays users' names
     :param display: UI display box that displays messages
-    :param name:L user's name
+    :param name: user's name
     :param client_socket: user's individual socket
     """
-    message = msg.get()
-    msg.set('')
+    # message = msg.get()
+    # msg.set('')
     recipient = listbox.curselection()
     print(recipient)
     # if message != name:

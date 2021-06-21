@@ -111,14 +111,8 @@ class ChatUI:
 
         self.root = tk.Tk()
         self.root.title("Chat Client")
-        # setting window size
-        # width = 560
-        # height = 350
-        # screenwidth = self.root.winfo_screenwidth()
-        # screenheight = self.root.winfo_screenheight()
-        # alignstr = '%dx%d+%d+%d' % (width, height, (screenwidth - width) / 2, (screenheight - height) / 2)
         self.root.geometry("88x20")
-        # self.root.resizable(width=False, height=True)
+        self.root.resizable(width=False, height=False)
 
         self.scrollbar = tk.Scrollbar(self.root)
         self.display_message = tk.Listbox(self.root,
@@ -153,7 +147,6 @@ class ChatUI:
         self.input_field["font"] = ft
         self.input_field["fg"] = "#333333"
         self.input_field["justify"] = "center"
-        self.input_field["text"] = "Entry"
         self.input_field.place(x=130, y=320, width=240, height=30)
 
         self.send_button = tk.Button(self.root)
@@ -164,7 +157,7 @@ class ChatUI:
         self.send_button["justify"] = "center"
         self.send_button["text"] = "Send"
         self.send_button.place(x=370, y=320, width=80, height=30)
-        self.send_button["command"] = lambda: send_message(self.msg,
+        self.send_button["command"] = lambda: send_message(self.msg.get(),
                                                            self.participant_listbox,
                                                            self.display_message,
                                                            name,
