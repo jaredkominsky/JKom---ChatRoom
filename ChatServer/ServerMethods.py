@@ -71,7 +71,7 @@ def start_server(server_address, server, names, clients):
     :param names: list of names relating to each socket
     :param clients: list of client sockets
     """
-    print('Chat session successfully connected on: ' + server_address[0])
+    print(f'Chat session successfully connected on: {server_address[0]}')
 
     server.listen()
     while True:
@@ -81,10 +81,10 @@ def start_server(server_address, server, names, clients):
 
         names.append(name)
 
-        print('New connection with {}'.format(name))
+        print(f'New connection with {name}')
         clients.append(connection)
 
-        broadcast_data(('{} has joined the chat.\r\n'.format(name)), connection, clients)
+        broadcast_data(f'{name} has joined the chat.\r\n', connection, clients)
 
         connection.send('Welcome to the chat!\r\n'.encode(FORMAT))
         connection.send('Remember to select who you want the message to be sent to! '.encode(FORMAT))

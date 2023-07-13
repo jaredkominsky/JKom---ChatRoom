@@ -23,7 +23,9 @@ def receive_msg(client_socket, client_names, name, display, listbox):
     :param name: Name of the user.
     :param client_names: Names of all users in the chatroom.
     """
-    client_socket.send(f'{"0"}{SEPARATOR}{"everyone"}{SEPARATOR}{name}{SEPARATOR}{name}'.encode())
+    client_socket.send(
+        f"0{SEPARATOR}{'everyone'}{SEPARATOR}{name}{SEPARATOR}{name}".encode()
+    )
     while True:
         try:
             #  Receive the message and decode.
@@ -55,8 +57,7 @@ def accept_msg_from_client(text_message, client_names, display, listbox):
     from_client = text_message[2]
     message = text_message[3]
     handle_client_names(from_client, client_names, listbox)
-    display.insert(END,
-                   '{}: {}'.format(from_client, message))
+    display.insert(END, f'{from_client}: {message}')
 
 
 def handle_client_names(client_name, client_names, listbox):
@@ -97,15 +98,12 @@ def send_message(msg, listbox, display, name, client_socket):
     print(recipient)
     # if message != name:
     if recipient[0] != 0:
-        display.insert(END,
-                       '{}->PM->{}: {}'.format(name, listbox.get(recipient[0]),
-                                               message))
+        display.insert(END, f'{name}->PM->{listbox.get(recipient[0])}: {message}')
     else:
-        display.insert(END,
-                       '{}: {}'.format(name, message))
+        display.insert(END, f'{name}: {message}')
     for i in recipient:
         #  All incoming message format {text_file bit}:{to}:{from}:{message}
-        message = f'{"0"}{SEPARATOR}{listbox.get(i)}{SEPARATOR}{name}{SEPARATOR}{message}'
+        message = f'0{SEPARATOR}{listbox.get(i)}{SEPARATOR}{name}{SEPARATOR}{message}'
         client_socket.send(message.encode(FORMAT))
 
 
@@ -117,22 +115,18 @@ def browse_files(listbox, display, client_socket, name):
     :param client_socket: user's individual socket
     :param name: user's names
     """
-    filename = filedialog.askopenfilename(
+    if filename := filedialog.askopenfilename(
         initialdir="/Users",
         title="Select a File",
-        filetypes=(("Text files",
-                    "*.txt*"),
-                   ("all files",
-                    "*.*")))
-
-    if not filename:
+        filetypes=(("Text files", "*.txt*"), ("all files", "*.*")),
+    ):
+        send_file(filename,
+                  listbox,
+                  display,
+                  client_socket,
+                  name)
+    else:
         return
-
-    send_file(filename,
-              listbox,
-              display,
-              client_socket,
-              name)
 
 
 def send_file(filename, listbox, display, client_socket, name):
@@ -153,7 +147,7 @@ def send_file(filename, listbox, display, client_socket, name):
     for i in recipient:
         while data:
             #  All incoming message format {text_file bit}:{to}:{from}:{message}
-            message = f'{"1"}{SEPARATOR}{listbox.get(i)}{SEPARATOR}{name}{SEPARATOR}{data}'
+            message = f'1{SEPARATOR}{listbox.get(i)}{SEPARATOR}{name}{SEPARATOR}{data}'
             client_socket.send(message.encode(FORMAT))
             data = f.read(BUFFERSIZE)
     display.insert(END,
@@ -182,8 +176,7 @@ def read_write_file(message, display):
     if not save_file:
         return
 
-    f = open(save_file + '.txt',
-             'w')
+    f = open(f'{save_file}.txt', 'w')
     f.write(message)
     display.insert(END,
                    'The file has been saved.')
