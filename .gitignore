@@ -1,7 +1,8 @@
 
-ChatClient/__pycache__/ChatUI.cpython-37.pyc
-ChatClient/__pycache__/ClientHandling.cpython-37.pyc
+*/__pycache__/
 *.pyc
 *.pyc
-.idea/misc.xml
+.idea
+.git/
 *.iml
+.gitattributes
