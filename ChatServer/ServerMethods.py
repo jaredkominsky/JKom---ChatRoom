@@ -39,14 +39,14 @@ def handle_client(conn, names, clients):
         #  Check if message is sent to everyone or an individual
         #  All incoming message format {text_file bit}:{to}:{from}:{message}
         split_message = msg_recv.split(SEPARATOR)
-        text_file = split_message[0]
         to_client = split_message[1]
-        from_client = split_message[2]
         message = split_message[3]
         if to_client != 'everyone':
             message = message
             individual_client_index = names.index(to_client) - 1  # must account for the server in names 'everyone'
             individual_client_conn = clients[individual_client_index]
+            text_file = split_message[0]
+            from_client = split_message[2]
             message_to_send = f'{text_file}{SEPARATOR}{to_client}{SEPARATOR}{from_client}{SEPARATOR}[{message}]'
             individual_client_conn.send(message_to_send.encode(FORMAT))
         else:
